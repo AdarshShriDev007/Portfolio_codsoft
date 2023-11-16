@@ -7,16 +7,18 @@ import {BsTwitter} from "react-icons/bs";
 import {FaFacebookSquare} from "react-icons/fa";
 import {BsInstagram} from "react-icons/bs";
 import {FaLinkedinIn} from "react-icons/fa";
-import {FaDribbble} from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import Socials from '../cmp/Header/Socials';
+import { useMenu } from '../contextApi/MenuContext';
+import SocialsLink from '../assets/Socials.json';
 
 const Header = () => {
 
-  const [open,setOpen] = useState(false);
+  const menuData = useMenu();
 
   return (
     <>
-      <div className='w-full shadow-md'>
+      <div className='w-full bg-white shadow-md sticky top-0 left-0 z-10'>
           <div className='max-w-[1240px] p-5 mx-auto'>
               <div className='flex items-center justify-between'>
                   <img className='w-[40px]' src="https://cdn-icons-png.flaticon.com/128/3665/3665909.png" alt="logo" />
@@ -25,7 +27,7 @@ const Header = () => {
                       <IoCall className='text-xl' />
                       <h2 className='text-bash font-bold'>(+91) 836 828 4349</h2>
                       {
-                        !open ? <GiHamburgerMenu onClick={()=>setOpen(true)} className='text-2xl cursor-pointer' />  : <AiOutlineClose onClick={()=>setOpen(false)} className='text-2xl cursor-pointer text-white z-10' />
+                        !menuData.open ? <GiHamburgerMenu onClick={()=>menuData.setOpen(true)} className='text-2xl cursor-pointer' /> : <AiOutlineClose onClick={()=>menuData.setOpen(false)} className='text-2xl cursor-pointer text-white' />
                       }
                       
                       
@@ -34,27 +36,27 @@ const Header = () => {
           </div>
       </div>
       {
-        open && (
-          <div className='w-full fixed top-0 left-0 h-[100vh] bg-[rgba(0,0,0,0.8)]'>
+        menuData.open && (
+          <div className='w-full fixed top-0 left-0 h-[100vh] bg-[rgba(0,0,0,0.8)] z-20'>
+            <div className='max-w-[1240px] px-5 pt-5 mx-auto flex justify-end items-center'>
+              <AiOutlineClose onClick={()=>menuData.setOpen(false)} className='text-2xl cursor-pointer text-white mt-[7px]' />
+            </div>
             <div className='max-w-[1240px] p-5 mx-auto text-white h-[100%] flex flex-col items-center justify-center'>
-              
               <ul className='flex flex-col items-center text-xl gap-4 mb-10'>
-                <Menus name={"Home"}  />
-                <Menus name={"About Me"}  />
-                <Menus name={"What I Do"}  />
-                <Menus name={"Resume"} />
-                <Menus name={"Portfolio"}  />
-                <Menus name={"FAQ"}  />
-                <Menus name={"Client Speak"}  />
-                <Menus name={"Contact Me"} />
+                <Menus name={"Home"} pathName="/" />
+                <Menus name={"About Me"} pathName="about"  />
+                <Menus name={"What I Do"} pathName="what_i_do" />
+                <Menus name={"Skills"} pathName="skills" />
+                <Menus name={"Projects"} pathName="projects"  />
+                <Menus name={"Contact Me"} pathName="contact" />
               </ul>
 
               <ul className='flex items-center gap-4 text-2xl'>
-                <Socials icon={<BsTwitter />} />
-                <Socials icon={<FaFacebookSquare />} /> 
-                <Socials icon={<BsInstagram />} />
-                <Socials icon={<FaLinkedinIn />} />
-                <Socials icon={<FaDribbble />} />
+                <Socials icon={<FaLinkedinIn />} link={SocialsLink.linkedin} />
+                <Socials icon={<FaGithub />} link={SocialsLink.github} />
+                <Socials icon={<BsTwitter />} link={SocialsLink.twitter} />
+                <Socials icon={<FaFacebookSquare />} link={SocialsLink.facebook} /> 
+                <Socials icon={<BsInstagram />} link={SocialsLink.instagram} />  
               </ul>
             </div>
           </div>
